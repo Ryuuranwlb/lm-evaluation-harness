@@ -191,6 +191,8 @@ class EvaluationTracker:
         self,
         results: dict,
         samples: dict,
+        custom_subfolder: str = "",
+        custom_model_name: str = ""
     ) -> None:
         """
         Saves the aggregated results and samples to the output path and pushes them to the Hugging Face hub if requested.
@@ -226,7 +228,13 @@ class EvaluationTracker:
                 )
 
                 path = Path(self.output_path if self.output_path else Path.cwd())
-                path = path.joinpath(self.general_config_tracker.model_name_sanitized)
+                # path = path.joinpath(self.general_config_tracker.model_name_sanitized)
+                folder_suffix = self.general_config_tracker.model_name_sanitized
+                if folder_suffix is None:
+                    folder_suffix = custom_model_name
+
+                pathname = custom_subfolder + folder_suffix
+                path = path.joinpath(pathname)
                 path.mkdir(parents=True, exist_ok=True)
 
                 self.date_id = datetime.now().isoformat().replace(":", "-")
@@ -274,6 +282,8 @@ class EvaluationTracker:
         self,
         task_name: str,
         samples: dict,
+        custom_subfolder: str = "",
+        custom_model_name: str = ""
     ) -> None:
         """
         Saves the samples results to the output path and pushes them to the Hugging Face hub if requested.
@@ -287,7 +297,13 @@ class EvaluationTracker:
                 eval_logger.info(f"Saving per-sample results for: {task_name}")
 
                 path = Path(self.output_path if self.output_path else Path.cwd())
-                path = path.joinpath(self.general_config_tracker.model_name_sanitized)
+                # path = path.joinpath(self.general_config_tracker.model_name_sanitized)
+                folder_suffix = self.general_config_tracker.model_name_sanitized
+                if folder_suffix is None:
+                    folder_suffix = custom_model_name
+
+                pathname = custom_subfolder + folder_suffix
+                path = path.joinpath(pathname)
                 path.mkdir(parents=True, exist_ok=True)
 
                 file_results_samples = path.joinpath(

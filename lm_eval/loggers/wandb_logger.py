@@ -311,6 +311,7 @@ class WandbLogger:
         tasks_by_groups = {}
 
         for task_name in task_names:
+            # if task_name.equals("leaderboard_math_hard")
             group_names = self.task_configs[task_name].get("group", None)
             if group_names:
                 if isinstance(group_names, str):
