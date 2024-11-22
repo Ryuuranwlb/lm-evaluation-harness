@@ -204,6 +204,10 @@ class WandbLogger:
         resps = [""] * len(ids)
         filtered_resps = [""] * len(ids)
         model_outputs = {}
+        custom_infos = None
+        if data[0].get("custom_infos"):
+            custom_infos = [""] * len(ids)
+
 
         metrics_list = config["metric_list"]
         metrics = {}
@@ -247,6 +251,18 @@ class WandbLogger:
             filtered_resps = [
                 np.argmax([n[0] for n in x["filtered_resps"]]) for x in data
             ]
+            if data[0].get("custom_infos"):
+                for idx, entry in enumerate(data):
+                    custom_entry = entry["custom_infos"]
+
+                    entry_val = [x[0] for x in custom_entry]
+                    # check if all entry val is the same
+                    if not all(x == entry_val[0] for x in entry_val):
+                        custom_infos[idx] = entry_val
+                    else:
+                        custom_infos[idx] = entry_val[0]
+
+
         elif config["output_type"] == "loglikelihood_rolling":
             instance = [x["arguments"][0][0] for x in data]
             resps = [x["resps"][0][0] for x in data]
@@ -255,8 +271,13 @@ class WandbLogger:
             instance = [x["arguments"][0][0] for x in data]
             resps = [x["resps"][0][0] for x in data]
             filtered_resps = [x["filtered_resps"][0] for x in data]
+            if data[0].get("custom_infos"):
+                for idx, entry in enumerate([x["custom_infos"][0][0] for x in data]):
+                    custom_infos[idx] = "\n".join([f"action_{num}:{text}" for num, text in entry])
+                pass
 
-        model_outputs["raw_predictions"] = resps
+        if not config["output_type"] == "generate_until":
+            model_outputs["raw_predictions"] = resps
         model_outputs["filtered_predictions"] = filtered_resps
 
         df_data = {
@@ -273,6 +294,10 @@ class WandbLogger:
         }
         df_data.update(tmp_data)
         df_data.update(model_outputs)
+
+        if custom_infos is not None:
+            df_data["custom_infos"] = custom_infos
+
         df_data.update(metrics)
 
         return pd.DataFrame(df_data)

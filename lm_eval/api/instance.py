@@ -24,6 +24,9 @@ class Instance:
     doc_id: Optional[int] = None
     repeats: Optional[int] = None
 
+    # custom info
+    custom_infos: list = field(default_factory=list)
+
     def __post_init__(self) -> None:
         # unpack metadata field
         self.task_name, self.doc_id, self.repeats = self.metadata

@@ -74,6 +74,7 @@ def simple_evaluate(
     numpy_random_seed: int = 1234,
     torch_random_seed: int = 1234,
     fewshot_random_seed: int = 1234,
+    custom_logging: bool = False,
 ):
     """Instantiate and evaluate a model on a list of tasks.
 
@@ -311,6 +312,7 @@ def simple_evaluate(
         apply_chat_template=apply_chat_template,
         fewshot_as_multiturn=fewshot_as_multiturn,
         verbosity=verbosity,
+        custom_logging=custom_logging,
     )
 
     if lm.rank == 0:
@@ -370,6 +372,7 @@ def evaluate(
     apply_chat_template: Union[bool, str] = False,
     fewshot_as_multiturn: bool = False,
     verbosity: str = "INFO",
+    custom_logging: bool = False,
 ):
     """Instantiate and evaluate a model on a list of tasks.
 
@@ -502,11 +505,15 @@ def evaluate(
                 cloned_reqs.extend([req] * req.repeats)
 
         # run requests through model
-        resps = getattr(lm, reqtype)(cloned_reqs)
-
-        # put responses from model into a list of length K for each request.
-        for x, req in zip(resps, cloned_reqs):
-            req.resps.append(x)
+        if custom_logging:
+            resps, custom_infos = getattr(lm, reqtype)(cloned_reqs)
+            for x, req, custom_info in zip(resps, cloned_reqs, custom_infos):
+                req.resps.append(x)
+                req.custom_infos.append(custom_info)
+        else:
+            resps = getattr(lm, reqtype)(cloned_reqs)
+            for x, req in zip(resps, cloned_reqs):
+                req.resps.append(x)
 
         if lm.world_size > 1:
             lm.accelerator.wait_for_everyone()
@@ -561,6 +568,8 @@ def evaluate(
                         "prompt_hash": hash_string(requests[0].arguments[0]),
                         "target_hash": hash_string(str(target)),
                     }
+                    if custom_logging:
+                        example["custom_infos"] = [req.custom_infos for req in requests]
                     example.update(metrics)
                     task_output.logged_samples.append(example)
                 for metric, value in metrics.items():

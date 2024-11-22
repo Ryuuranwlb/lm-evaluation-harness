@@ -324,6 +324,8 @@ class EvaluationTracker:
                     sample["filtered_resps"] = sanitize_list(sample["filtered_resps"])
                     sample["arguments"] = arguments
                     sample["target"] = str(sample["target"])
+                    if "custom_infos" in sample:
+                        sample["custom_infos"] = sanitize_list(sample["custom_infos"])
 
                     sample_dump = (
                         json.dumps(
