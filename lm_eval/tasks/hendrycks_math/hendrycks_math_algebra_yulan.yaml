@@ -1,0 +1,47 @@
+tag:
+  - math_word_problems
+task: hendrycks_math_algebra_yulan
+dataset_path: EleutherAI/hendrycks_math
+process_docs: !function utils.process_docs
+dataset_name: algebra
+output_type: generate_until
+training_split: train
+test_split: test
+doc_to_text:  "{{problem}}\nPlease reason step by step, and put your final answer within \\boxed{}."
+process_results: !function utils.process_results
+doc_to_target: "{{answer}}"
+filter_list:
+  - name: "strict-match"
+    filter:
+      - function: "regex"
+        group_select: -1
+        regex_pattern: "boxed{((?:[^{}]|{(?:[^{}]|{[^{}]*})*})*)}"
+      - function: "take_first"
+generation_kwargs:
+  until:
+    - "Problem:"
+    - "</s>"
+    - "<|im_end|>"
+  do_sample: false
+  temperature: 0
+metric_list:
+  - metric: exact_match
+    aggregation: mean
+    higher_is_better: true
+
+metadata:
+  version: 1.0
+dataset_kwargs:
+  trust_remote_code: true
+num_fewshot: 0
+fewshot_config:
+  sampler: first_n
+  samples:
+  - question: "The circle $2x^2 = -2y^2 + 12x - 4y + 20$ is inscribed inside a square which has a pair of sides parallel to the x-axis. What is the area of the square?"
+    target: "Alright, let's tackle this problem step by step. The equation given is \\(2x^2 = -2y^2 + 12x - 4y + 20\\), and we need to find the area of the square that perfectly fits around this circle with sides parallel to the x-axis.\n\nFirst off, the equation looks a bit messy. I think simplifying it would help. Maybe I can rearrange the terms to get it into a standard circle equation form. Let's see...\n\nStarting with:\n\\[2x^2 = -2y^2 + 12x - 4y + 20\\]\n\nI want to get all the \\(x\\) and \\(y\\) terms on one side. So, I'll add \\(2y^2\\) to both sides:\n\\[2x^2 + 2y^2 = 12x - 4y + 20\\]\n\nNow, it might be useful to divide the entire equation by 2 to simplify the coefficients:\n\\[x^2 + y^2 = 6x - 2y + 10\\]\n\nOkay, this looks better. The next step is to complete the square for both \\(x\\) and \\(y\\) to get it into the standard circle form \\((x - h)^2 + (y - k)^2 = r^2\\).\n\nFor the \\(x\\) terms:\n\\[x^2 - 6x\\]\nTo complete the square, take half of the coefficient of \\(x\\), which is \\(-6\\), so half is \\(-3\\), and square it to get \\(9\\):\n\\[(x^2 - 6x + 9) - 9 = (x - 3)^2 - 9\\]\n\nFor the \\(y\\) terms:\n\\[y^2 + 2y\\]\nHalf of \\(2\\) is \\(1\\), and squaring it gives \\(1\\):\n\\[(y^2 + 2y + 1) - 1 = (y + 1)^2 - 1\\]\n\nNow, plugging these back into the equation:\n\\[(x - 3)^2 - 9 + (y + 1)^2 - 1 = 10\\]\n\nCombine the constants on the left:\n\\[(x - 3)^2 + (y + 1)^2 - 10 = 10\\]\n\nAdd \\(10\\) to both sides to isolate the squared terms:\n\\[(x - 3)^2 + (y + 1)^2 = 20\\]\n\nGreat, now it's in the standard circle form where the center is \\((3, -1)\\) and the radius squared is \\(20\\). So, the radius \\(r\\) is:\n\\[r = \\sqrt{20} = 2\\sqrt{5}\\]\n\nSince the circle is inscribed in a square, the diameter of the circle will be equal to the side length of the square. The diameter \\(d\\) is twice the radius:\n\\[d = 2r = 2 \\times 2\\sqrt{5} = 4\\sqrt{5}\\]\n\nFinally, the area \\(A\\) of the square is the side length squared:\n\\[A = d^2 = (4\\sqrt{5})^2 = 16 \\times 5 = 80\\]\n\nSo, the area of the square is \\(\\boxed{80}\\)."
+  - question: "In the year 2001, the United States will host the International Mathematical Olympiad. Let $I$, $M$, and $O$ be distinct positive integers such that the product $I\\cdot M\\cdot O=2001$. What is the largest possible value of the sum $I+M+O$?"
+    target: "Alright, let's tackle this problem. I need to find distinct positive integers \\( I, M, \\) and \\( O \\) such that their product is \\( 2001 \\) and their sum \\( I + M + O \\) is as large as possible.\n\nFirst, I should factorize \\( 2001 \\) to understand its prime components. Let me see:\n\n\\[ 2001 \\div 3 = 667 \\]\n\\[ 667 \\div 23 = 29 \\]\n\nSo, the prime factors of \\( 2001 \\) are \\( 3, 23, \\) and \\( 29 \\).\n\nNow, I need to distribute these factors among \\( I, M, \\) and \\( O \\) to maximize their sum. Since I want the sum to be as large as possible, I should try to make one of the numbers as large as possible while keeping the others as small as possible.\n\nLet me consider assigning all the prime factors to one variable. If I set:\n\\[ I = 2001, \\quad M = 1, \\quad O = 1 \\]\nThen,\n\\[ I + M + O = 2001 + 1 + 1 = 2003 \\]\n\nBut wait, the problem states that \\( I, M, \\) and \\( O \\) must be distinct. In this case, \\( M \\) and \\( O \\) are both \\( 1 \\), which are not distinct. Oops, that's a mistake.\n\nOkay, let's try another approach. Maybe assign two factors to one variable and the remaining factor to another, ensuring all three numbers are distinct.\n\nFirst, let's try:\n\\[ I = 3 \\times 23 = 69, \\quad M = 29, \\quad O = 1 \\]\nThen,\n\\[ I + M + O = 69 + 29 + 1 = 99 \\]\n\nThat's better, but maybe not the maximum. Let me see if there's a larger sum possible.\n\nWhat if I assign:\n\\[ I = 3 \\times 29 = 87, \\quad M = 23, \\quad O = 1 \\]\nThen,\n\\[ I + M + O = 87 + 23 + 1 = 111 \\]\n\nThat's an improvement. Can I do even better?\n\nLet me try:\n\\[ I = 23 \\times 29 = 667, \\quad M = 3, \\quad O = 1 \\]\nThen,\n\\[ I + M + O = 667 + 3 + 1 = 671 \\]\n\nWow, that's significantly larger! But are these all distinct? Yes, \\( 667, 3, \\) and \\( 1 \\) are all distinct.\n\nIs there a way to get an even larger sum? Let's see. What if I distribute the factors differently?\n\nSuppose:\n\\[ I = 3 \\times 23 \\times 29 = 2001, \\quad M = 1, \\quad O = 1 \\]\nBut again, \\( M \\) and \\( O \\) are both \\( 1 \\), which are not distinct. So, this doesn't work.\n\nAnother attempt:\n\\[ I = 3 \\times 23 = 69, \\quad M = 29, \\quad O = 1 \\]\nWe already did this, and the sum was \\( 99 \\), which is less than \\( 671 \\).\n\nIt seems that assigning the product of the two largest primes to one variable and keeping the others as small as possible gives the largest sum. Therefore, the maximum sum \\( I + M + O \\) is \\( 671 \\).\n\n\\[\\boxed{671}\\]"
+  - question: "A particular novel contains $40,\\!000$ words. If the author completed the novel in $80$ hours, on average how many words per hour did she write?"
+    target: "Alright, let's tackle this problem about the novel with 40,000 words written in 80 hours. I need to find out the average words per hour the author wrote. Okay, let's see...\n\nFirst, the total words are 40,000, and the total time is 80 hours. So, I guess I need to divide the total words by the total hours to get the average words per hour.\n\nSo, \\[ \\text{Average words per hour} = \\frac{40000 \\text{ words}}{80 \\text{ hours}} \\]\n\nLet me do that division. Hmm, 40,000 divided by 80. I think I can simplify this by dividing both numerator and denominator by 8 to make it easier.\n\n\\[ \\frac{40000 \\div 8}{80 \\div 8} = \\frac{5000}{10} \\]\n\nOh, that makes sense! So, \\[ \\frac{5000}{10} = 500 \\]\n\nWait, did I do that right? Let me check again. If I have 40,000 words and I divide by 80 hours, simplifying by dividing both by 8 gives me 5,000 over 10, which is indeed 500.\n\nJust to be extra sure, I'll do the actual division:\n\n\\[ 80 \\times 500 = 40,000 \\]\n\nYes, that checks out. So, the author wrote an average of \\(\\boxed{500}\\) words per hour."
+  - question: "Adam and Simon start on bicycle trips from the same point at the same time. Adam travels east at 8mph and Simon travels south at 6mph. After how many hours are they 60 miles apart?"
+    target: "Okay, let's tackle this problem. Adam and Simon start biking from the same point, one east at 8 mph and the other south at 6 mph. I need to find out after how many hours they'll be 60 miles apart.\n\nFirst, I'm thinking about their paths. Since Adam is going east and Simon is going south, they're moving at right angles to each other. That makes me think of a right triangle where the distance each travels is a leg, and the distance between them is the hypotenuse.\n\nSo, if I let \\( t \\) be the time in hours, then:\n\n- Adam's distance east: \\( 8t \\) miles\n- Simon's distance south: \\( 6t \\) miles\n\nUsing the Pythagorean theorem, the distance between them \\( D \\) can be expressed as:\n\n\\[ D = \\sqrt{(8t)^2 + (6t)^2} \\]\n\nI want \\( D \\) to be 60 miles, so:\n\n\\[ 60 = \\sqrt{(8t)^2 + (6t)^2} \\]\n\nLet me square both sides to get rid of the square root:\n\n\\[ 60^2 = (8t)^2 + (6t)^2 \\]\n\nCalculating the squares:\n\n\\[ 3600 = 64t^2 + 36t^2 \\]\n\nCombine like terms:\n\n\\[ 3600 = 100t^2 \\]\n\nNow, I'll solve for \\( t^2 \\):\n\n\\[ t^2 = \\frac{3600}{100} \\]\n\n\\[ t^2 = 36 \\]\n\nTaking the square root of both sides:\n\n\\[ t = \\sqrt{36} \\]\n\n\\[ t = 6 \\]\n\nWait, that seems too straightforward. Did I miss something? Let me double-check.\n\nIf \\( t = 6 \\) hours:\n\n- Adam's distance: \\( 8 \\times 6 = 48 \\) miles east\n- Simon's distance: \\( 6 \\times 6 = 36 \\) miles south\n\nUsing the Pythagorean theorem:\n\n\\[ D = \\sqrt{48^2 + 36^2} \\]\n\n\\[ D = \\sqrt{2304 + 1296} \\]\n\n\\[ D = \\sqrt{3600} \\]\n\n\\[ D = 60 \\] miles\n\nYes, it checks out! So, after \\( \\boxed{6} \\) hours, Adam and Simon will be 60 miles apart."
