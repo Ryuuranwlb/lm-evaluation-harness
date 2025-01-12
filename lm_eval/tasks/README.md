@@ -14,6 +14,7 @@
 | [arabic_leaderboard_complete](arabic_leaderboard_complete/README.md) | A full version of the tasks in the Open Arabic LLM Leaderboard, focusing on the evaluation of models that reflect the characteristics of Arabic language understanding and comprehension, culture, and heritage. Note that some of these tasks are machine-translated. | Arabic (Some MT) |
 | [arabic_leaderboard_light](arabic_leaderboard_light/README.md) | A light version of the tasks in the Open Arabic LLM Leaderboard (i.e., 10% samples of the test set in the original benchmarks), focusing on the evaluation of models that reflect the characteristics of Arabic language understanding and comprehension, culture, and heritage. Note that some of these tasks are machine-translated. | Arabic (Some MT) |
 | [arabicmmlu](arabicmmlu/README.md) | Localized Arabic version of MMLU with multiple-choice questions from 40 subjects. | Arabic |
+| [AraDICE](aradice/README.md) | A collection of multiple tasks carefully designed to evaluate dialectal and cultural capabilities in large language models (LLMs). | Arabic |
 | [arc](arc/README.md) | Tasks involving complex reasoning over a diverse set of questions.  | English |
 | [arithmetic](arithmetic/README.md) | Tasks involving numerical computations and arithmetic reasoning. | English |
 | [asdiv](asdiv/README.md) | Tasks involving arithmetic and mathematical reasoning challenges. | English |
@@ -45,6 +46,7 @@
 | [fld](fld/README.md) | Tasks involving free-form and directed dialogue understanding. | English |
 | [french_bench](french_bench/README.md) | Set of tasks designed to assess language model performance in French. | French|
 | [galician_bench](galician_bench/README.md) | Collection of tasks in Galician encompassing various evaluation areas. | Galician |
+| [global_mmlu](global_mmlu/README.md) | Collection of culturally sensitive and culturally agnostic MMLU tasks in 15 languages with human translations or post-edits. | Multiple (15 languages) |
 | [glue](glue/README.md) | General Language Understanding Evaluation benchmark to test broad language abilities. | English |
 | [gpqa](gpqa/README.md) | Tasks designed for general public question answering and knowledge verification. | English |
 | [gsm8k](gsm8k/README.md) | A benchmark of grade school math problems aimed at evaluating reasoning capabilities. | English |
@@ -71,6 +73,7 @@
 | [mathqa](mathqa/README.md) | Question answering tasks involving mathematical reasoning and problem-solving. | English |
 | [mc_taco](mc_taco/README.md) | Question-answer pairs that require temporal commonsense comprehension. | English |
 | [med_concepts_qa](med_concepts_qa/README.md) | Benchmark for evaluating LLMs on their abilities to interpret medical codes and distinguish between medical concept. | English |
+| [metabench](metabench/README.md) | Distilled versions of six popular benchmarks which are highly predictive of overall benchmark performance and of a single general ability latent trait. | English |
 | medmcqa | Medical multiple choice questions assessing detailed medical knowledge. | English |
 | medqa | Multiple choice question answering based on the United States Medical License Exams. | |
 | [mgsm](mgsm/README.md) | Benchmark of multilingual grade-school math problems. | Spanish, French, German, Russian, Chinese, Japanese, Thai, Swahili, Bengali, Telugu |
@@ -100,6 +103,7 @@
 | [race](race/README.md) | Reading comprehension assessment tasks based on English exams in China. | English |
 | realtoxicityprompts | Tasks to evaluate language models for generating text with potential toxicity. | |
 | [sciq](sciq/README.md) | Science Question Answering tasks to assess understanding of scientific concepts. | English |
+| [score](score/README.md) | Systematic consistency and robustness evaluation for LLMs on 3 datasets(MMLU-Pro, Agi Eval and MATH) | English |
 | [scrolls](scrolls/README.md) | Tasks that involve long-form reading comprehension across various domains. | English |
 | [siqa](siqa/README.md) | Social Interaction Question Answering to evaluate common sense and social reasoning.  | English |
 | [spanish_bench](spanish_bench/README.md) | Collection of tasks in Spanish encompassing various evaluation areas. | Spanish |

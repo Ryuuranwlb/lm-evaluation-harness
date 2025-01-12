@@ -1,0 +1,5 @@
+"dataset_name": "anatomy"
+"doc_to_text": "You are an expert in anatomy. The following is a multiple choice question (with answers) about anatomy. Please think step by step, and provide your final answer by replying with one of the options: (A), (B), (C), or (D).\nQuestion: {{question.strip()}}\n(A) {{choices[0]}} (B) {{choices[1]}} (C) {{choices[2]}} (D) {{choices[3]}}"
+"tag": "mmlu_yulan_cot_zeroshot_stem"
+"include": "_mmlu_yulan_cot_zeroshot_template_yaml"
+"task": "mmlu_yulan_cot_zeroshot_anatomy"

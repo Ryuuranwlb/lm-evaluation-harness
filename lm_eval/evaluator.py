@@ -295,7 +295,9 @@ def simple_evaluate(
             model_source=model,
             model_args=model_args,
             system_instruction=system_instruction,
-            chat_template=lm.chat_template(apply_chat_template),
+            chat_template=lm.chat_template(apply_chat_template)
+            if apply_chat_template
+            else None,
             fewshot_as_multiturn=fewshot_as_multiturn,
         )
 
@@ -557,6 +559,8 @@ def evaluate(
                         "filtered_resps": [
                             req.filtered_resps[filter_key] for req in requests
                         ],
+                        "filter": filter_key,
+                        "metrics": list(metrics.keys()),
                         "doc_hash": hash_string(
                             json.dumps(
                                 requests[0].doc,

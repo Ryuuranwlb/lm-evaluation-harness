@@ -1,0 +1,16 @@
+group: hendrycks_math_yulan
+task:
+  - hendrycks_math_algebra_yulan
+  - hendrycks_math_counting_and_prob_yulan
+  - hendrycks_math_geometry_yulan
+  - hendrycks_math_intermediate_algebra_yulan
+  - hendrycks_math_num_theory_yulan
+  - hendrycks_math_prealgebra_yulan
+  - hendrycks_math_precalc_yulan
+aggregate_metric_list:
+  - metric: exact_match
+    aggregation: mean
+    weight_by_size: true
+    filter_list: strict-match
+metadata:
+  version: 1.0

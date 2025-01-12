@@ -1,0 +1,5 @@
+"dataset_name": "miscellaneous"
+"doc_to_text": "You are an expert in miscellaneous. The following is a multiple choice question (with answers) about miscellaneous. Please think step by step, and provide your final answer by replying with one of the options: (A), (B), (C), or (D).\nQuestion: {{question.strip()}}\n(A) {{choices[0]}} (B) {{choices[1]}} (C) {{choices[2]}} (D) {{choices[3]}}"
+"tag": "mmlu_yulan_cot_zeroshot_other"
+"include": "_mmlu_yulan_cot_zeroshot_template_yaml"
+"task": "mmlu_yulan_cot_zeroshot_miscellaneous"

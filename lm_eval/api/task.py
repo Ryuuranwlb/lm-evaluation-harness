@@ -398,7 +398,7 @@ class Task(abc.ABC):
         )
         cache_key += f"-tokenizer{tokenizer_name}"
 
-        cached_instances = load_from_cache(file_name=cache_key)
+        cached_instances = load_from_cache(file_name=cache_key, cache=cache_requests)
 
         if cache_requests and cached_instances and not rewrite_requests_cache:
             cached_instances = cached_instances[:limit]
@@ -1503,7 +1503,10 @@ class ConfigurableTask(Task):
             # we expect multiple_targets to be a list.
             elif self.multiple_target:
                 gold = list(gold)
-            elif type(gold) is not type(result):
+            elif (
+                type(gold) is not type(result)
+                and "bypass" not in self._metric_fn_list.keys()
+            ):
                 # cast gold to the same type as result
                 gold = type(result)(gold)
 
